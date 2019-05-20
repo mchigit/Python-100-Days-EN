@@ -1,0 +1,254 @@
+## Day03 - Conditionals
+
+### Usage of Conditionals
+
+<!-- 迄今为止，我们写的Python代码都是一条一条语句顺序执行，这种结构的代码我们称之为顺序结构。然而仅有顺序结构并不能解决所有的问题，比如我们设计一个游戏，游戏第一关的通关条件是玩家获得1000分，那么在完成本局游戏后我们要根据玩家得到分数来决定究竟是进入第二关还是告诉玩家“Game Over”，这里就会产生两个分支，而且这两个分支只有一个会被执行，这就是程序中分支结构。类似的场景还有很多，给大家一分钟的时间，你应该可以想到至少5个以上这样的例子，赶紧试一试。 -->
+
+Until now, our Python code is executed sequentially, therefore it is called sequential code execution, meaning the code is executed line by line. However, sequential execution does not solve all the problems.  
+
+For example, if we are designing a game which the wining condition for 1st round is that the player needs to get 1000 points. Then at the end of the game, we need to decide whether the player won or not based on the points. 2 branches of execution are available (Game over or next round), and only 1 will be executed.  This is conditional code execution. 
+
+<!-- ### if语句的使用 -->
+
+### Usage of if
+
+<!-- 在Python中，要构造分支结构可以使用`if`、`elif`和`else`关键字。所谓关键字就是有特殊含义的单词，像`if`和`else`就是专门用于构造分支结构的关键字，很显然你不能够使用它作为变量名（事实上，用作其他的标识符也是不可以）。下面的例子中演示了如何构造一个分支结构。 -->
+
+In Python, we can use `if`, `elif` and `else` keywords to conditionally execute code (Notice these are keywords, which are reserved. Therefore you cannot name variables using these keywords). The following example explains how we can conditionally execute code using `if` 
+
+```Python
+"""
+Authentication
+
+Version: 0.1
+Author: 骆昊
+"""
+
+username = input('Please enter username: ')
+password = input('Please enter password: ')
+# You can use getpass to hide user input when entering
+# import getpass
+# password = getpass.getpass('enter password: ')
+if username == 'admin' and password == '123456':
+    print('Auth success!')
+else:
+    print('Auth failed!')
+```
+
+<!-- 唯一需要说明的是和C/C++、Java等语言不同，Python中没有用花括号来构造代码块而是使用了缩进的方式来设置代码的层次结构，如果`if`条件成立的情况下需要执行多条语句，只要保持多条语句具有相同的缩进就可以了，换句话说连续的代码如果又保持了相同的缩进那么它们属于同一个代码块，相当于是一个执行的整体。
+
+当然如果要构造出更多的分支，可以使用`if…elif…else…`结构，例如下面的分段函数求值。 -->
+
+Note that Python does not use curly braces like Java or C/C++ to surround a code block, instead it use indentation. This is a very important point to remember. A single code block will have the same indentation. If multiple lines of code have different indentation, then they are not the same code block. All lines of code that should be executed within an `if` or `else` block should be indented. 
+
+To create more than 2 branches of execution, we can use `if..elif..else`. See example below:
+
+![$$f(x)=\begin{cases} 3x-5&\text{(x>1)}\\x+2&\text{(-1}\leq\text{x}\leq\text{1)}\\5x+3&\text {(x<-1)}\end{cases}$$](./res/formula_1.png)
+
+We want to write code to represent the above function
+
+```Python
+"""
+
+        3x - 5  (x > 1)
+f(x) =  x + 2   (-1 <= x <= 1)
+        5x + 3  (x < -1)
+
+Version: 0.1
+Author: 骆昊
+"""
+
+x = float(input('x = '))
+if x > 1:
+    y = 3 * x - 5
+elif x >= -1:
+    y = x + 2
+else:
+    y = 5 * x + 3
+print('f(%.2f) = %.2f' % (x, y))
+```
+
+<!-- 当然根据实际开发的需要，分支结构是可以嵌套的，例如判断是否通关以后还要根据你获得的宝物或者道具的数量对你的表现给出等级（比如点亮两颗或三颗星星），那么我们就需要在`if`的内部构造出一个新的分支结构，同理`elif`和`else`中也可以再构造新的分支，我们称之为嵌套的分支结构，也就是说上面的代码也可以写成下面的样子。 -->
+
+Of course, depending on the requirement, conditionals can be nested. You can have `if` block nested in another `if` or `elif` or `else` block. So the above code can actually be written like below: 
+
+```Python
+"""
+分段函数求值
+		3x - 5	(x > 1)
+f(x) =	x + 2	(-1 <= x <= 1)
+		5x + 3	(x < -1)
+
+Version: 0.1
+Author: 骆昊
+"""
+
+x = float(input('x = '))
+if x > 1:
+    y = 3 * x - 5
+else:
+    if x >= -1:
+        y = x + 2
+    else:
+        y = 5 * x + 3
+print('f(%.2f) = %.2f' % (x, y))
+```
+
+<!-- > **说明：** 大家可以自己感受一下这两种写法到底是哪一种更好。在之前我们提到的Python之禅中有这么一句话“Flat is better than nested.”，之所以提出这个观点是因为嵌套结构的嵌套层次多了之后会严重的影响代码的可读性，如果可以使用扁平化的结构就不要去用嵌套，因此之前的写法是更好的做法。 -->
+
+> **Note：** The above 2 examples output the same result. We mentioned before that "Flat is better than nested" in Python, because as nested conditionals grow it really affects the readability. Therefore multiple conditionals is better than nested conditionals. 
+
+### Exercise
+
+#### Exercise 1：Conversion between inches and cm
+
+```Python
+"""
+英制单位英寸和公制单位厘米互换
+
+Version: 0.1
+Author: 骆昊
+"""
+
+value = float(input('Please enter length: '))
+unit = input('Enter unit: ')
+if unit == 'in' or unit == '英寸':
+    print('%finch = %fcm' % (value, value * 2.54))
+elif unit == 'cm' or unit == '厘米':
+    print('%fcm = %finch' % (value, value / 2.54))
+else:
+    print('please enter valid unit')
+```
+
+#### Exercise 2：Roll dice
+
+```Python
+"""
+掷骰子决定做什么事情
+
+Version: 0.1
+Author: 骆昊
+
+This example basically shows how you can assign a variable different values based on a random value
+
+"""
+
+from random import randint
+
+face = randint(1, 6)
+if face == 1:
+    result = '唱首歌'
+elif face == 2:
+    result = '跳个舞'
+elif face == 3:
+    result = '学狗叫'
+elif face == 4:
+    result = '做俯卧撑'
+elif face == 5:
+    result = '念绕口令'
+else:
+    result = '讲冷笑话'
+print(result)
+```
+> **Note:** Code above uses the random library to generate a random integer
+
+#### Exercise 3：Grade percentage conversion
+
+```Python
+"""
+百分制成绩转等级制成绩
+> 90  --> A
+80 ~ 89    --> B
+70 ~ 79	   --> C
+60 ~ 69    --> D
+< 60    --> E
+
+Version: 0.1
+Author: 骆昊
+"""
+
+score = float(input('Enter grade: '))
+if score >= 90:
+    grade = 'A'
+elif score >= 80:
+    grade = 'B'
+elif score >= 70:
+    grade = 'C'
+elif score >= 60:
+    grade = 'D'
+else:
+    grade = 'E'
+print('Your grade level:', grade)
+```
+#### Exercise 4：Enter length for 3 sides, check if can construct a triangle. If so, calculate perimeter and area
+
+```Python
+"""
+判断输入的边长能否构成三角形
+如果能则计算出三角形的周长和面积
+
+Version: 0.1
+Author: 骆昊
+
+"""
+
+import math
+
+a = float(input('a = '))
+b = float(input('b = '))
+c = float(input('c = '))
+if a + b > c and a + c > b and b + c > a:
+    print('Perimeter: %f' % (a + b + c))
+    p = (a + b + c) / 2
+    area = math.sqrt(p * (p - a) * (p - b) * (p - c))
+    print('Area: %f' % (area))
+else:
+    print('Cannot create triangle')
+```
+> **Note：** Above code used `sqrt` method from math library to find square root. we use a triangle property that any 2 sides length sum should be grater than the length of the 3rd side, to check whether or not a triangle can be constructed. 
+
+#### Exercise 5：Calculate tax
+
+```Python
+"""
+输入月收入和五险一金计算个人所得税
+
+This example is really specific to tax in China
+The important thing to note here is the number of conditionals you can have. 
+
+Version: 0.1
+Author: 骆昊
+"""
+
+salary = float(input('本月收入: '))
+insurance = float(input('五险一金: '))
+diff = salary - insurance - 3500
+if diff <= 0:
+    rate = 0
+    deduction = 0
+elif diff < 1500:
+    rate = 0.03
+    deduction = 0
+elif diff < 4500:
+    rate = 0.1
+    deduction = 105
+elif diff < 9000:
+    rate = 0.2
+    deduction = 555
+elif diff < 35000:
+    rate = 0.25
+    deduction = 1005
+elif diff < 55000:
+    rate = 0.3
+    deduction = 2755
+elif diff < 80000:
+    rate = 0.35
+    deduction = 5505
+else:
+    rate = 0.45
+    deduction = 13505
+tax = abs(diff * rate - deduction)
+print('个人所得税: ￥%.2f元' % tax)
+print('实际到手收入: ￥%.2f元' % (diff + 3500 - tax))
+```
+>**Note：** Above code uses built in `abs` method to take the absolute value of a number. 
