@@ -228,7 +228,18 @@ Can be downloaded at https://www.sublimetext.com/
 
 #### PyCharm - IDE
 
-Can be downloaded at https://www.jetbrains.com/pycharm/
+Can be downloaded at https://www.jetbrains.com/pycharm/  
+PyCharm is a really good integrated development environment with powerful functionalities. 
+
+![](./res/python-pycharm.png)
+
+#### Gitpod - One click online development tool
+
+<!-- 只需单击即可在GitHub上打开任何Python项目。 -->
+You can click this to open any Python project on Github  
+More documentation at https://www.gitpod.io/docs
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/jackfrued/Python-100-Days)
 
 ### Exercise
 
