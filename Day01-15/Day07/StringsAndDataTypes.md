@@ -315,7 +315,7 @@ Here is an interesting question, why do we need tuple if we already have list?
 
 ### Using Set
 
-Python中的集合跟数学上的集合是一致的，不允许有重复元素，而且可以进行交集、并集、差集等运算。
+<!-- Python中的集合跟数学上的集合是一致的，不允许有重复元素，而且可以进行交集、并集、差集等运算。 -->
 Python's set is the same as a mathematical set, does not allow any duplicated elements, and we can perform intersection, union or difference operations on them. 
 
 ![](./res/python-set.png)
@@ -333,19 +333,21 @@ def main():
     print(set1)
     print(set2)
     set2.discard(5)
-    # remove的元素如果不存在会引发KeyError
+    # If the element we remove doesn't exist, will throw Error
+    # But discard won't throw error
     if 4 in set2:
         set2.remove(4)
     print(set2)
-    # 遍历集合容器
+    # Looping through the set
+    # Note that the end parameter only works in Python3
     for elem in set2:
         print(elem ** 2, end=' ')
     print()
-    # 将元组转换成集合
+    # Converting a tuple to set 
     set3 = set((1, 2, 3, 3, 2, 1))
     print(set3.pop())
     print(set3)
-    # 集合的交集、并集、差集、对称差运算
+    # Set intersection, union, difference
     print(set1 & set2)
     # print(set1.intersection(set2))
     print(set1 | set2)
@@ -354,7 +356,7 @@ def main():
     # print(set1.difference(set2))
     print(set1 ^ set2)
     # print(set1.symmetric_difference(set2))
-    # 判断子集和超集
+    # Calculating subset and super set
     print(set2 <= set1)
     # print(set2.issubset(set1))
     print(set3 <= set1)
@@ -369,36 +371,47 @@ if __name__ == '__main__':
     main()
 ```
 
-> **说明：** Python中允许通过一些特殊的方法来为某种类型或数据结构自定义运算符（后面的章节中会讲到），上面的代码中我们对集合进行运算的时候可以调用集合对象的方法，也可以直接使用对应的运算符，例如`&`运算符跟intersection方法的作用就是一样的，但是使用运算符让代码更加直观。
+<!-- > **说明：** Python中允许通过一些特殊的方法来为某种类型或数据结构自定义运算符（后面的章节中会讲到），上面的代码中我们对集合进行运算的时候可以调用集合对象的方法，也可以直接使用对应的运算符，例如`&`运算符跟intersection方法的作用就是一样的，但是使用运算符让代码更加直观。 -->
 
-### 使用字典
+> **Note:** Python allows user defined operators. Notice the code above, we can use operator or class methods to find intersection, or subsets. For example, the use of `&` is the same as calling `set1.intersection(set2)`, but using operators is easier to visualize. 
 
-字典是另一种可变容器模型，类似于我们生活中使用的字典，它可以存储任意类型对象，与列表、集合不同的是，字典的每个元素都是由一个键和一个值组成的“键值对”，键和值通过冒号分开。下面的代码演示了如何定义和使用字典。
+### Using Dictionaries
+
+<!-- 字典是另一种可变容器模型，类似于我们生活中使用的字典，它可以存储任意类型对象，与列表、集合不同的是，字典的每个元素都是由一个键和一个值组成的“键值对”，键和值通过冒号分开。下面的代码演示了如何定义和使用字典。 -->
+
+Dictionary is another mutable, indexed and unordered data structure. It can store any data types, but each value is stored as a key-value pair. The code below shows how to use dictionaries. 
+
+
+If you learned about data structures, dictionary is Python's representation of Hash Table. This concept will come very handy in interviews, since a hash table provides on average constant time operation. 
 
 ```Python
 def main():
     scores = {'骆昊': 95, '白元芳': 78, '狄仁杰': 82}
-    # 通过键可以获取字典中对应的值
+    # Can access value by specifying the key
     print(scores['骆昊'])
     print(scores['狄仁杰'])
     # 对字典进行遍历(遍历的其实是键再通过键取对应的值)
+    # Looping through the dictionary
+    # While iterating, we are given the key of the dictionary, then accessing the value based on the key
     for elem in scores:
         print('%s\t--->\t%d' % (elem, scores[elem]))
-    # 更新字典中的元素
+    # Updating value of a key
     scores['白元芳'] = 65
     scores['诸葛王朗'] = 71
+    # Update method will insert values if they don't exist, and update exisiting
     scores.update(冷面=67, 方启鹤=85)
     print(scores)
     if '武则天' in scores:
         print(scores['武则天'])
     print(scores.get('武则天'))
-    # get方法也是通过键获取对应的值但是可以设置默认值
+    # get method also retrieves a value, but can set a default value if the element does not exist
     print(scores.get('武则天', 60))
-    # 删除字典中的元素
+    # Poping the last item from the dictionary
     print(scores.popitem())
     print(scores.popitem())
+    # Pop method can also specify default value if the key does not exist
     print(scores.pop('骆昊', 100))
-    # 清空字典
+    # clearing the entire dictionary
     scores.clear()
     print(scores)
 
@@ -407,9 +420,9 @@ if __name__ == '__main__':
     main()
 ```
 
-### 练习
+### Exercise
 
-#### 练习1：在屏幕上显示跑马灯文字
+#### Exercise 1：Looping the content string
 
 ```Python
 import os
@@ -419,11 +432,13 @@ import time
 def main():
     content = '北京欢迎你为你开天辟地…………'
     while True:
-        # 清理屏幕上的输出
+        # clearing the screen
+        # use os.system('clear') if you are in linux env
         os.system('cls')  # os.system('clear')
         print(content)
-        # 休眠200毫秒
+        # sleep for 0.2 seconds
         time.sleep(0.2)
+        # modifying the content, such that the first letter now becomes the last
         content = content[1:] + content[0]
 
 
@@ -431,7 +446,7 @@ if __name__ == '__main__':
     main()
 ```
 
-#### 练习2：设计一个函数产生指定长度的验证码，验证码由大小写字母和数字构成。
+#### Exercise 2：Generate a variable length random character code
 
 ```Python
 import random
@@ -439,11 +454,10 @@ import random
 
 def generate_code(code_len=4):
     """
-    生成指定长度的验证码
 
-    :param code_len: 验证码的长度(默认4个字符)
+    :param code_len: The length of the verification code, default to 4
 
-    :return: 由大小写英文字母和数字构成的随机验证码
+    :return: A random string generated from all_chars
     """
     all_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
     last_pos = len(all_chars) - 1
@@ -454,17 +468,17 @@ def generate_code(code_len=4):
     return code
 ```
 
-#### 练习3：设计一个函数返回给定文件名的后缀名。
+#### Exercise 3: return the file extension
 
 ```Python
 def get_suffix(filename, has_dot=False):
     """
-    获取文件名的后缀名
 
-    :param filename: 文件名
-    :param has_dot: 返回的后缀名是否需要带点
-    :return: 文件的后缀名
+    :param filename: file name
+    :param has_dot: whether the file name contains period
+    :return: file extension
     """
+    # rfind finds the highest index
     pos = filename.rfind('.')
     if 0 < pos < len(filename) - 1:
         index = pos if has_dot else pos + 1
@@ -473,7 +487,7 @@ def get_suffix(filename, has_dot=False):
         return ''
 ```
 
-#### 练习4：设计一个函数返回传入的列表中最大和第二大的元素的值。
+#### Exercise 4：Find the the largest and second largest element of x
 
 ```Python
 def max2(x):
@@ -487,27 +501,21 @@ def max2(x):
     return m1, m2
 ```
 
-#### 练习5：计算指定的年月日是这一年的第几天
+#### Exercise 5: compute the day of the year given year, month and date
 
 ```Python
 def is_leap_year(year):
     """
-    判断指定的年份是不是闰年
+    Compute if is leap year
 
-    :param year: 年份
-    :return: 闰年返回True平年返回False
     """
     return year % 4 == 0 and year % 100 != 0 or year % 400 == 0
 
 
 def which_day(year, month, date):
     """
-    计算传入的日期是这一年的第几天
 
-    :param year: 年
-    :param month: 月
-    :param date: 日
-    :return: 第几天
+    :return: which day
     """
     days_of_month = [
         [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
@@ -530,11 +538,12 @@ if __name__ == '__main__':
     main()
 ```
 
-#### 练习6：打印[杨辉三角](https://zh.wikipedia.org/wiki/%E6%9D%A8%E8%BE%89%E4%B8%89%E8%A7%92%E5%BD%A2)。
+#### Exercise 6, print Pascal Triangle
 
 ```Python
 def main():
     num = int(input('Number of rows: '))
+    # this will create a list of num lists
     yh = [[]] * num
     for row in range(len(yh)):
         yh[row] = [None] * (row + 1)
@@ -551,9 +560,9 @@ if __name__ == '__main__':
     main()
 ```
 
-### 综合案例
+### Real world problems
 
-#### 案例1：双色球选号
+<!-- #### Problem 1: Lottery
 
 ```Python
 from random import randrange, randint, sample
@@ -592,14 +601,20 @@ if __name__ == '__main__':
     main()
 ```
 
-> **说明：** 上面使用random模块的sample函数来实现从列表中选择不重复的n个元素。
+> **说明：** 上面使用random模块的sample函数来实现从列表中选择不重复的n个元素。 -->
 
-#### 综合案例2：[约瑟夫环问题](https://zh.wikipedia.org/wiki/%E7%BA%A6%E7%91%9F%E5%A4%AB%E6%96%AF%E9%97%AE%E9%A2%98)
+
+#### Problem 1 [Josephus Problem](https://en.wikipedia.org/wiki/Josephus_problem)
 
 ```Python
 """
-《幸运的基督徒》
-有15个基督徒和15个非基督徒在海上遇险，为了能让一部分人活下来不得不将其中15个人扔到海里面去，有个人想了个办法就是大家围成一个圈，由某个人开始从1报数，报到9的人就扔到海里面，他后面的人接着从1开始报数，报到9的人继续扔到海里面，直到扔掉15个人。由于上帝的保佑，15个基督徒都幸免于难，问这些人最开始是怎么站的，哪些位置是基督徒哪些位置是非基督徒。
+We are solving a variation:
+
+15 Turks and 15 Christians on board a ship in a storm which will sink unless half the passengers are thrown overboard. All 30 stand in a circle and every ninth person is to be tossed into the sea. Where should the Christians stand to ensure that only the Turks are tossed?
+
+The idea is very simple, just have a loop that goes to 15, and set the element in array as False if it is a multiple of 9. 
+
+In the end, whichever element is True, that means the person is alive. 
 """
 
 
@@ -616,7 +631,7 @@ def main():
         index += 1
         index %= 30
     for person in persons:
-        print('基' if person else '非', end='')
+        print('Christians' if person else 'Turks', end='')
 
 
 if __name__ == '__main__':
@@ -624,7 +639,7 @@ if __name__ == '__main__':
 
 ```
 
-#### 综合案例3：[井字棋](https://zh.wikipedia.org/wiki/%E4%BA%95%E5%AD%97%E6%A3%8B)游戏
+<!-- #### Problem 2[Tic Tac Toe](https://en.wikipedia.org/wiki/Tic-tac-toe)
 
 ```Python
 import os
@@ -671,4 +686,4 @@ if __name__ == '__main__':
     main()
 ```
 
->**说明：** 最后这个案例来自[《Python编程快速上手:让繁琐工作自动化》](https://item.jd.com/11943853.html)一书（这本书对有编程基础想迅速使用Python将日常工作自动化的人来说还是不错的选择），对代码做了一点点的调整。
+>**说明：** 最后这个案例来自[《Python编程快速上手:让繁琐工作自动化》](https://item.jd.com/11943853.html)一书（这本书对有编程基础想迅速使用Python将日常工作自动化的人来说还是不错的选择），对代码做了一点点的调整。 -->
